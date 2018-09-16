@@ -14,20 +14,33 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LogIn extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
+    public static final String USER_KEY = "user";
+    public static final String PASS_KEY = "password";
+    String user_email = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         final EditText email = (EditText) findViewById(R.id.email);
         final EditText password = (EditText) findViewById(R.id.password);
 
         final TextView messageLog = (TextView) findViewById(R.id.messageLog);
+
+
 
         Button signIn = (Button) findViewById(R.id.signInButton);
         Button signUp = (Button) findViewById(R.id.signUpButton);
@@ -38,7 +51,7 @@ public class LogIn extends AppCompatActivity {
                     return;
                 }
 
-                String user_email = email.getText().toString();
+                user_email = email.getText().toString();
                 String user_password = password.getText().toString();
 
                 login(user_email, user_password, messageLog);
@@ -68,7 +81,9 @@ public class LogIn extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void login(String email, String password, final TextView messageLog) {
+
+
+    private void login(final String email, final String password, final TextView messageLog) {
         mAuth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -78,6 +93,14 @@ public class LogIn extends AppCompatActivity {
                     System.out.println(user.getUid());
                     messageLog.setText("Login was successful");
 
+                    DocumentReference loginInfo = FirebaseFirestore.getInstance().document(email);
+
+
+                    Map<String, Object> logins = new HashMap<String, Object>();
+                    logins.put(USER_KEY, email);
+                    logins.put(PASS_KEY, password);
+
+                    bringOverLogin(loginInfo);
                     goToNextActivity(user);
                 } else {
                     System.out.println("login failed");
@@ -89,7 +112,13 @@ public class LogIn extends AppCompatActivity {
         });
     }
 
-    private void createUser(String email, String password, final TextView messageLog) {
+    private void bringOverLogin(DocumentReference loginInfo) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("User", user_email);
+        startActivity(intent);
+    }
+
+    private void createUser(final String email, final String password, final TextView messageLog) {
         mAuth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -98,6 +127,13 @@ public class LogIn extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
                     System.out.println(user.getUid());
                     messageLog.setText("Login was successful");
+
+                    DocumentReference loginInfo = FirebaseFirestore.getInstance().document(email);
+
+
+                    Map<String, Object> logins = new HashMap<String, Object>();
+                    logins.put (USER_KEY, email);
+                    logins.put (PASS_KEY, password);
 
                     goToNextActivity(user);
                 } else {

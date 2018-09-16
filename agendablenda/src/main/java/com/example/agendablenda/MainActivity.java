@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -22,9 +24,12 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
+
     private TextView thedate;
     private Button btngocalendar;
     private FirebaseAuth mAuth;
+
+    //DocumentReference loginInfo = FirebaseFirestore.getInstance()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser user = mAuth.getCurrentUser();
+
+//                DocumentReference courseInfo = FirebaseFirestore.getInstance().document("users" + loginInfo  + days + );
+//                courseInfo.put("")
+//
+
+
                 repeatActivity(user);
 
             }
