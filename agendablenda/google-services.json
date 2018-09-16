@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "145288309731-9u2mqovj9bv8dek4nddve45pvnjhq58j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.agendablenda",
+            "certificate_hash": "d00b51bd148b202aa4301e970e051bde4233c75e"
+          }
+        },
+        {
           "client_id": "145288309731-3fa2cl63mavnik639kcojqnghv742bmd.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145288309731-3fa2cl63mavnik639kcojqnghv742bmd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
