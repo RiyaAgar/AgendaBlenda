@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "145288309731",
+    "firebase_url": "https://agendablenda.firebaseio.com",
+    "project_id": "agendablenda",
+    "storage_bucket": "agendablenda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145288309731:android:f098e0c75e5f45d2",
+        "android_client_info": {
+          "package_name": "com.example.agendablenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145288309731-3fa2cl63mavnik639kcojqnghv742bmd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBogj1NXWlDKZB3TK72wpywzt0bgjuVxrY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
