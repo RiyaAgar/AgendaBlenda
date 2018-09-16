@@ -16,4 +16,20 @@ public class Schedule {
         this.starttime = starttime;
         this.endTime = endTime;
     }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public ArrayList<String> getDays() {
+        return days;
+    }
+
+    public Time getStarttime() {
+        return starttime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
 }

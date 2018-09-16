@@ -9,6 +9,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONObject;
+
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,11 +28,24 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView thedate;
     private Button btngocalendar;
+    private FirebaseUser user;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Intent i = getIntent();
+        String emailemail = i.getStringExtra("email");
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
         btngocalendar = (Button) findViewById(R.id.btngocalendar);
 
         btngocalendar.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +81,12 @@ public class MainActivity extends AppCompatActivity {
 
                             );
 
-                    // Call firebase and store the variables once you have access to the user's object
+
+                    JSONObject jsonObject = new JSONObject();
+                    String daysString = days.toString();
+
+
+                    databaseReference.child("Courses").child(user.getUid()).child(personOneCourses.getCourseName()).setValue(daysString + start_time + end_time);
                 } catch (ParseException e) {//tests for validity
 //                    e.printStackTrace();
                     String errormsg = "You done goofed up, write the write number boi";

@@ -14,15 +14,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LogIn extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
+    String user_email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
         mAuth = FirebaseAuth.getInstance();
+        //Firebase
+        //firestore = Firebase.getInstance();
 
         final EditText email = (EditText) findViewById(R.id.email);
         final EditText password = (EditText) findViewById(R.id.password);
@@ -53,7 +58,7 @@ public class LogIn extends AppCompatActivity {
                     return;
                 }
 
-                String user_email = email.getText().toString();
+                user_email = email.getText().toString();
                 String user_password = password.getText().toString();
 
                 createUser(user_email, user_password, messageLog);
@@ -65,6 +70,13 @@ public class LogIn extends AppCompatActivity {
 
     private void goToNextActivity(FirebaseUser user) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("Email", user_email);
+        startActivity(intent);
+    }
+
+    private void goToCalculate(){
+        Intent intent = new Intent(this, Calculate.class);
+        intent.putExtra("Email", user_email);
         startActivity(intent);
     }
 
@@ -96,9 +108,9 @@ public class LogIn extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
+                    firestore.collection("users").add(user);
                     System.out.println(user.getUid());
                     messageLog.setText("Login was successful");
-
                     goToNextActivity(user);
                 } else {
                     // If sign in fails, display a message to the user.
